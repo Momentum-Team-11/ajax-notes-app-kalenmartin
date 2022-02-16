@@ -15,6 +15,20 @@ const noteText = document.querySelector('#note-text').value
     createNote(noteText)
 })
 
+function listNote() {
+  fetch(url)
+      .then((res) => res.json())
+      .then((data) => {
+      console.log(data)
+        // take all the notes
+        // loop through and create a new note item on the page for each one
+      for (let noteObj of data) {
+          renderNoteItem(noteObj)
+      }
+      })
+  }
+
+
 // Listen for different actions on list items
 // This is an example of event delegation
 noteList.addEventListener('click', function (event) {
@@ -37,19 +51,20 @@ if (event.target.classList.contains('cancel')) {
 /***** CRUD Functions *****/
 
 // GET all the notes
-function listNote() {
-fetch(url)
-    .then((res) => res.json())
-    .then((data) => {
-    console.log(data)
-      // take all the notes
-      // loop through and create a new note item on the page for each one
-    for (let noteObj of data) {
-        renderNoteItem(noteObj)
-    }
-    })
-}
+// function listNote() {
+// fetch(url)
+//     .then(response => response.json())
+//     .then((data) => {
+//     console.log(data)
+//       // take all the notes
+//       // loop through and create a new note item on the page for each one
+//     for (let noteObj of data) {
+//         renderNoteItem(noteObj)
+//     }
+//     })
+// }
 
+//DELETE
 function deleteNote(element) {
   // I need to know WHICH note to delete, so I need the id (matching in db.json)
 const noteId = element.parentElement.id
@@ -63,12 +78,12 @@ fetch(`http://localhost:3000/notes/${noteId}`, {
 
 function updateNote(element) {
 const noteId = element.parentElement.id
-const noteText = document.querySelector('edit-text').value
+const noteText = document.querySelector('edit-text')
 fetch(`http://localhost:3000/notes/${noteId}`, {
     method: 'PATCH',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
-    item: noteText.value,
+    item: noteText,
     updated_at: moment().format(),
     })
 })
