@@ -180,7 +180,6 @@ const subButton = document.getElementById('submit-button')
 const saveButton = document.getElementById('save-button')
 const cancelButton = document.getElementById('cancel-button')
 let noteId
-let date
 
 function deezNotes() {
     document.getElementById("note-list").innerHTML = ''
@@ -207,7 +206,7 @@ function renderNote(noteObj) {
 //List notes at top of page
 deezNotes()
 
-//Make delete and edit icons clicky
+//delete and edit
 noteList.addEventListener('click', function (event) {
     event.preventDefault()
     if (event.target.classList.contains('delete')) {
@@ -218,12 +217,11 @@ noteList.addEventListener('click', function (event) {
 })
 
 
-//make submit button clicky
+//submit button
 subButton.addEventListener('click', function (event) {
     event.preventDefault()
     console.log("submit")
     
-    //If either field is empty, don't submit the note
     if (document.getElementById("newNote").value === '' || document.getElementById("currentBody").value === '') {
         return
     } else {
@@ -231,13 +229,13 @@ subButton.addEventListener('click', function (event) {
     }
 })
 
-//make edit button clicky
+//edit button
 saveButton.addEventListener('click', function (event) {
     event.preventDefault()
     editNote(event)
 })
 
-//make cancel button clicky
+//cancel button
 cancelButton.addEventListener('click', function (event) {
     event.preventDefault()
     console.log("cancel")
@@ -246,9 +244,9 @@ cancelButton.addEventListener('click', function (event) {
     const noteText = document.querySelector('#currentBody')
     newNote.value = ''
     noteText.value = ''
-    button1.style = "display: block;"
-    button2.style = "display: none;"
-    button3.style = "display: none;"
+    subButton.style = "display: block;"
+    saveButton.style = "display: none;"
+    cancelButton.style = "display: none;"
 })
 
 
@@ -256,7 +254,6 @@ cancelButton.addEventListener('click', function (event) {
 function createNote() {
     const newNote = document.querySelector('#newNote')
     const noteText = document.querySelector('#currentBody')
-    date = Date()
     fetch(url, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -306,19 +303,16 @@ function editMode(element) {
 }
 
 
-
 function editNote() {
     const newNote = document.querySelector('#newNote')
     const noteText = document.querySelector('#currentBody')
-    // date = Date()
-    document.getElementById(`${noteId}`).innerHTML = `<span class="dib w-60">${newNote.value}</span><i alt="delete note" class="ml2 dark-red fas fa-times delete"></i><i alt="edit note" class="ml3 fas fa-edit edit"></i><br><p>${date}</p>`
+    document.getElementById(`${noteId}`).innerHTML = `<span class="dib w-60">${newNote.value}</span><i alt="delete note" class="ml2 dark-red fas fa-times delete"></i><i alt="edit note" class="ml3 fas fa-edit edit"></i><br></p>`
     fetch(`http://localhost:3000/notes/${noteId}`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
             title: newNote.value,
             body: noteText.value,
-            // updated_at: moment().format(),
         })
     })
     document.getElementById("note-edit").innerText = "Plzdontforgetthis"
