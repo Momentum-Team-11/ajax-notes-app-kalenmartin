@@ -8,28 +8,25 @@
   <link rel="stylesheet" href="https://unpkg.com/tachyons@4.12.0/css/tachyons.min.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
   <script src="moment.min.js" defer></script>
-  <script src="schript.js" defer></script>
-  <title>Notes</title>
+  <script src="skript.js" defer></script>
+  <title>MOAR NOTES</title>
 </head>
 
 
 <body class="sans-serif pa4">
 
-<h1 class="athelas f3 f2-m f1-l fw2 black-90 mv3">Notes!</h1>
+<h1 class="athelas f3 f2-m f1-l fw2 black-90 mv3">MOAR NOTES</h1>
 
-  <form id="note-form" class="pv4">
+  <form id="note-form">
 
-    <div class="form-field">
-      <input id="note-title" type="text" placeholder="Plzdontforgetthis" required>
-    <br>
-      <input id="noteText" type="text" placeholder="Note Go here" required>
-    </div>
+      <input type="text" id="note-title" placeholder="Plzdontforgetthis" required>
+      <textarea id="note-body" placeholder="Note Go Here"></textarea>
       <button id="save-note" type="submit" class="bn mt3 f5 ph3 pv2 mb2 dib white bg-blue">Save Yer Note</button>
   </form>
 
-  <section id="notes">
+  <div id="notes">
     <ul id="note-list"></ul>
-  </section>
+  </div>
 
 </body>
 

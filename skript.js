@@ -2,28 +2,17 @@
 
 const url = 'http://localhost:3000/notes'
 const noteList = document.getElementById('note-list')
-const form = document.getElementById('note-form')
+const noteForm = document.getElementById('note-form')
 
 console.log('hello')
 
-// event listener
-form.addEventListener('submit', function (event) {
-    event.preventDefault()
+// // event listener
+// form.addEventListener('submit', function (event) {
+//     event.preventDefault()
 
-const noteText = document.querySelector('#note-text').value
-    createNote(noteText)
-})
-
-function listNote() {
-fetch(url)
-    .then((res) => res.json())
-    .then((data) => {
-    console.log(data)
-    for (let noteObj of data) {
-        renderNoteItem(noteObj)
-    }
-    })
-}
+// const noteText = document.querySelector('#text').value
+//     createNote(noteText)
+// })
 
 
 // Different listener events on list items //
@@ -43,6 +32,20 @@ if (event.target.classList.contains('cancel')) {
 }
 })
 
+// GET //
+function dezNotes() {
+    fetch(url)
+        .then((res) => res.json())
+        .then((data) => {
+        console.log(data)
+    for(let noteObj of data) {
+        renderNoteItem(noteObj)
+    }
+    })
+}
+
+
+
 //CRUD //
 
 
@@ -59,48 +62,45 @@ fetch(`http://localhost:3000/notes/${noteId}`, {
 
 function updateNote(element) {
 const noteId = element.parentElement.id
-const noteText = document.querySelector('edit-text')
+const noteBody = document.querySelector('note-body')
 fetch(`http://localhost:3000/notes/${noteId}`, {
     method: 'PATCH',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
-    item: noteText,
+    item: noteBody.value,
     updated_at: moment().format(),
-    })
+    }),
 })
     .then(function (res) {
     return res.json()
     })
     .then(function (data) {
-    console.log(data)
+    console.log(noteBody)
     renderNoteText(element.parentElement, data)
     })
 }
 
-// POST new
-function createNote(noteText) {
+// event listener //
+//the submit event listener to the POST//
+// Post //
+
+noteForm.addEventListener('submit', function (event) {
+    event.preventDefault()
+function createNote(myNotes) {
 fetch(url, {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-    item: noteText,
-    created_at: moment().format(),
+    headers: { 'Content-Type': 'application/json'},
+    body:JSON.stringify({
+    item: myNotes
+    // created_at: moment().format(),
     }),
 })
-    .then((res) => res.json())
-    .then((data) => {
-      // what I get back from the server IS the newly created note object that looks like this:
-    /*
-    {
-        "item": "Another thing!",
-        "id": 5
-    }
-    */
-      // So I can take that data and create a new note item in the DOM
+.then((res) => res.json())
+.then((data) => {
     renderNoteItem(data)
-    })
-clearInputs()
-}
+    noteForm.reset();
+    });
+}});
 
 /***** DOM changing functions *****/
 
@@ -131,9 +131,9 @@ showEditInput(element.parentElement)
 
 function showEditInput(noteItem) {
 noteItem.innerHTML = `
-    <input class="edit-text input-reset ba b--black-20 pa2 mb2 w-60" type="text" value="${noteItem.textContent}"focus>
-    <button class='update-note bn f6 link br1 ph2 pv1 ml1 dib white bg-green' data-note=${noteItem.id}>save</button>
-    <button class='cancel bn f6 link br1 ph2 pv1 ml2 dib black bg-light-gray'>cancel</button>
+    <input class="edit-text" type="text" value="${noteItem.textContent}"focus>
+    <textarea class="update-note" data-note=${noteBody.textarea.id}>save</button>
+    <button class="submit">submit</button>
 `
 noteItem.querySelector('input').select()
 }
@@ -154,7 +154,7 @@ form.reset()
 /**** Function that runs as soon as the script file loads *****/
 // call this when the script first runs (on page load)
 // This runs only on the first load!
-listNote()
+dezNotes()
 
 
 
