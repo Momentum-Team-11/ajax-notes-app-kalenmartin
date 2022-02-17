@@ -197,7 +197,7 @@ function deezNotes() {
 function renderNote(noteObj) {
     const itemEl = document.createElement('li')
     itemEl.id = noteObj.id
-    itemEl.classList.add('lh-copy','pv3','ba','bl-0','bt-0','br-0','b--dotted','b--black-3')
+    itemEl.classList.add('lh-copy','pv3','ba','bl-0','bt-0','br-0','b--solid','b--black-3')
     itemEl.innerHTML = `<span>${noteObj.title}</span><i alt="delete note" class="ml2 dark-red fas fa-times delete"></i><i alt="edit note" class="ml3 fas fa-edit edit"></i><br><p>${noteObj.date}</p>`
     noteList.prepend(itemEl)
 }
@@ -260,7 +260,6 @@ function createNote() {
         body: JSON.stringify({
             title: newNote.value,
             body: noteText.value,
-            // date: date,
         }),
     })
         .then((res) => res.json())
@@ -306,7 +305,7 @@ function editMode(element) {
 function editNote() {
     const newNote = document.querySelector('#newNote')
     const noteText = document.querySelector('#currentBody')
-    document.getElementById(`${noteId}`).innerHTML = `<span class="dib w-60">${newNote.value}</span><i alt="delete note" class="ml2 dark-red fas fa-times delete"></i><i alt="edit note" class="ml3 fas fa-edit edit"></i><br></p>`
+    document.getElementById(`${noteId}`).innerHTML = `<span class="dib w-60">${newNote.value}</span><i alt="delete note" class="ml2 dark- fas fa-times delete"></i><i alt="edit note" class="ml3 fas fa-edit edit"></i><br></p>`
     fetch(`http://localhost:3000/notes/${noteId}`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
