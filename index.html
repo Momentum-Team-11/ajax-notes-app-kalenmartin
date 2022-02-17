@@ -8,7 +8,7 @@
   <link rel="stylesheet" href="https://unpkg.com/tachyons@4.12.0/css/tachyons.min.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
   <script src="moment.min.js" defer></script>
-  <script src="skript.js" defer></script>
+  <script src="schript.js" defer></script>
   <title>Notes</title>
 </head>
 
@@ -20,17 +20,15 @@
   <form id="note-form" class="pv4">
 
     <div class="form-field">
-      <input id="note-text" class="pa3 w-100 measure" type="text" placeholder="Note Go here" required>
+      <input id="note-title" type="text" placeholder="Plzdontforgetthis" required>
+    <br>
+      <input id="noteText" type="text" placeholder="Note Go here" required>
     </div>
-    
-    <div class="form-field">
       <button id="save-note" type="submit" class="bn mt3 f5 ph3 pv2 mb2 dib white bg-blue">Save Yer Note</button>
-    </div>
-
   </form>
 
-  <section id="notes" class="pa3">
-    <ul id="note-list" class="list pl0 measure"></ul>
+  <section id="notes">
+    <ul id="note-list"></ul>
   </section>
 
 </body>
